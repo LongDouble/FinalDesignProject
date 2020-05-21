@@ -33,19 +33,20 @@ for line in f:
                 arr.append(new_value)
 
 # Format force commands
-offset = 0 - int(arr[0][0] * 1000000)
+multiplier = 1000000000
+offset = 0 - int(arr[0][0] * multiplier)
 line = "force a "
 for i in range(0, len(arr)):
     if i != 0:
         line += ", "
-    line += str(arr[i][1]) + " @ " + str(offset + int(arr[i][0] * 1000000))
+    line += str(arr[i][1]) + " @ " + str(offset + int(arr[i][0] * multiplier))
 print(line)
 
 line = "force b "
 for i in range(0, len(arr)):
     if i != 0:
         line += ", "
-    line += str(arr[i][2]) + " @ " + str(offset + int(arr[i][0] * 1000000))
+    line += str(arr[i][2]) + " @ " + str(offset + int(arr[i][0] * multiplier))
 print(line)
 
-print("run " + str(offset + int(arr[i][0] * 1000000) + 100))
+print("run " + str(offset + int(arr[i][0] * multiplier) + 100))
