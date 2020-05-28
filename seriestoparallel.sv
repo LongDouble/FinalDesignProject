@@ -1,8 +1,9 @@
-module seriestoparallel(input logic clk, reset, clklatch
+module seriestoparallel(input logic clk, reset, clklatch,
                         input logic data, 
                         output logic [7:0] dataOut);
 
-    logic [7:0] dataNext
+    logic [7:0] dataNext;
+	 
 
 
     always_ff @(posedge clk, posedge reset) //shift registers so the input can be broken into sepeate channels.
