@@ -23,3 +23,4 @@ module seriestoparallel(input logic clk, reset, clklatch,
 
 endmodule     
 
+
