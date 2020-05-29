@@ -6,7 +6,7 @@ completely read and is avaiable at data_out,
 ready is set HIGH.
 */
 
-module PS2Converted(input  logic        clk, data_in, reset,
+module PS2Converter(input  logic        clk, data_in, reset,
                     output logic        ready,
                     output logic [7:0] data_out);
 
@@ -47,10 +47,14 @@ module PS2Converted(input  logic        clk, data_in, reset,
     //Shift register for output data 
     always_ff @(negedge clk, posedge reset)
         begin
-            if (reset) data_out <= 0;
+            if (reset) 
+                begin
+                    data_out <= 0;
+                    ready <= 0;
+                end
             else if (state == waiting)
                 begin
-                    ready = 0;
+                    ready <= 0;
                     bits_shifted <= 0;
                 end
 
@@ -62,7 +66,7 @@ module PS2Converted(input  logic        clk, data_in, reset,
                 end
 
             else if (state == stop_bit)
-                ready = 1;
+                ready <= 1;
         end
         
 endmodule
