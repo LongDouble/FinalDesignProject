@@ -20,4 +20,11 @@ ScanCodeRegister register(
 .data_out(registered_data)
 );
 
+SevenSeg segment0(registered_data[0], segments[0]);
+SevenSeg segment1(registered_data[1], segments[1]);
+SevenSeg segment2(registered_data[2], segments[2]);
+SevenSeg segment3(registered_data[3], segments[3]);
+SevenSeg segment4(registered_data[4], segments[4]);
+SevenSeg segment5(registered_data[5], segments[5]);
+
 endmodule

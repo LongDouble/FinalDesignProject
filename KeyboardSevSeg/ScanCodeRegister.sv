@@ -9,6 +9,9 @@ stored at the 0 index of data_out.
 module ScanCodeRegister(input logic clk, reset,
                         input logic [7:0] data_in,
                         output logic [7:0] data_out [5:0]);
+    
+    //Set HIGH if a reset is incoming;
+    logic incoming_reset;
 
     always_ff @(posedge clk, posedge reset)
         if(reset)
@@ -19,7 +22,14 @@ module ScanCodeRegister(input logic clk, reset,
                 data_out[2] <= 0;
                 data_out[1] <= 0;
                 data_out[0] <= 0;
+                incoming_reset <= 0;
             end
+        else if(data_in == 8'hf0)
+            incoming_reset <= 1;
+
+        else if(incoming_reset == 1)
+            incoming_reset <= 0;
+
         else
             begin
                 data_out[6] <= data_out[5];
