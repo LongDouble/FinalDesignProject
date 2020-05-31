@@ -1,3 +1,5 @@
+from random import *
+
 index = 0
 arr = [[]]
 
@@ -37,7 +39,7 @@ for cur_file in range(0, 10):
                     new_value[i] = 1
                     arr.append(new_value)
 
-    time_offset = arr[len(arr)-1][0] + 5000000
+    time_offset = arr[len(arr)-1][0] + 5000000 + randrange(10000)
 
 # Format force commands
 line = "force signal "
