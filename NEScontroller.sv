@@ -7,7 +7,7 @@ module nesConsle(input logic data,
     logic [7:0] dataOut;
     
     clkdivider(clk_900KHz, reset, clkspeeds);
-    assign clklatch <= clkspeeds[3];
+    assign clklatch <= clkspeeds[2];
     assign clkout <= clk_900KHz;
     seriestoparallel(clk_900KHz,reset,clklatch,data,dataout);
     assign a <= dataout[0];
