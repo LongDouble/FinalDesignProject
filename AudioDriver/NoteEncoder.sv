@@ -1,4 +1,4 @@
-module NoteEncoder(input logic note, output logic freq);
+module NoteEncoder(input logic [3:0] note, output logic [12:0] freq);
     always_comb
         case(note)
             0:       freq = 262; 
