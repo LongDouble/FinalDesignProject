@@ -57,13 +57,17 @@ module IRDriver(input logic clk, reset, input logic signal, output logic [7:0] v
                     prev <= prev + signal;
                 // Check to see if the address code transferred correctly
                 if (count == 73 && saved_values[15:8] != ~saved_values[7:0])
+                begin
                     count <= 0;
+                    prev <= 0;
+                end
                 // Check to see if the data was transferred correctly (122 because value gets copied one cycle after output settles)
                 else if (count == 122)
                 begin
                     if (saved_values[15:8] == ~saved_values[7:0])
                         value <= saved_values;
                     count <= 0;
+                    prev <= 0;
                 end
                 else
                     count <= count + 1;
