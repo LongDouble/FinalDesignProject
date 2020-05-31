@@ -2,7 +2,6 @@ module IRDriver(input logic clk, reset, input logic signal, output logic [7:0] v
     // Clock signal should have a period of 0.5625 ms
     // For a 50MHz clock, divide by 28125
     
-    // Alright so here's what I got so far: 
     // Sequence starts with 9 ms solid 0, followed by 4.5 ms of 1.
     // 1 pulses are 2.25 ms long, zeros are 1.125.
 
@@ -46,31 +45,31 @@ module IRDriver(input logic clk, reset, input logic signal, output logic [7:0] v
                     begin
                         saved_values <= saved_values << 1;
                         prev <= 0;
+                        count <= count + 1;
                     end
                     else
                     begin
                         saved_values <= (saved_values << 1) + 1;
                         prev <= 0;
+                        count <= count + 1;
                     end
                 end
                 else
                     prev <= prev + signal;
                 // Check to see if the address code transferred correctly
-                if (count == 73 && saved_values[15:8] != ~saved_values[7:0])
+                if (count == 40 && saved_values[15:8] != ~saved_values[7:0])
                 begin
                     count <= 0;
                     prev <= 0;
                 end
                 // Check to see if the data was transferred correctly (122 because value gets copied one cycle after output settles)
-                else if (count == 122)
+                else if (count == 56)
                 begin
                     if (saved_values[15:8] == ~saved_values[7:0])
                         value <= saved_values;
                     count <= 0;
                     prev <= 0;
                 end
-                else
-                    count <= count + 1;
             end
         end
 endmodule
