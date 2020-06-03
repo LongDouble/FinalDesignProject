@@ -11,7 +11,7 @@ module nesConsle(input logic data,
     assign clklatch = clkspeeds[3];
     assign clkout = clk_900KHz;
     seriestoparallel
-	serialconverter(clk_900KHz,reset,clklatch,data,dataout);
+	serialconverter(clk_900KHz,reset,clklatch,~data,dataout);
     assign a = dataout[0];
     assign b = dataout[1];
     assign select = dataout[2];
