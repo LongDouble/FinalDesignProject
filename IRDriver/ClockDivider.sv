@@ -9,7 +9,7 @@ module ClockDivider #(parameter divide_by = 2, N = 2) (input logic clk, reset, o
         end
         else
         begin
-            if (count < divide_by)
+            if (count < divide_by - 1)
                 count <= count + 1;
             else
             begin
