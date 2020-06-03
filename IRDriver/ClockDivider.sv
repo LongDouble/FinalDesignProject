@@ -1,7 +1,7 @@
 module ClockDivider #(parameter divide_by = 2, N = 2) (input logic clk, reset, output logic clk_div);
     logic [N-1:0] count;
 
-    always_ff @(posedge clk, posedge reset)
+    always_ff @(posedge clk, negedge clk, posedge reset)
         if (reset)
         begin
             count <= 0;
@@ -9,7 +9,7 @@ module ClockDivider #(parameter divide_by = 2, N = 2) (input logic clk, reset, o
         end
         else
         begin
-            if (count < divide_by/2 - 1)
+            if (count < divide_by - 1)
                 count <= count + 1;
             else
             begin
