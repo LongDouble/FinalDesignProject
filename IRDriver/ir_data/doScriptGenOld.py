@@ -33,7 +33,7 @@ for line in f:
                 arr.append(new_value)
 
 # Format force commands
-multiplier = 1000000000
+multiplier = 1000000000000
 offset = 0 - int(arr[0][0] * multiplier)
 line = "force a "
 for i in range(0, len(arr)):

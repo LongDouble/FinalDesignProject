@@ -1,3 +1,8 @@
+/*
+This module takes an input signal from an infrared receiver
+circuit and outputs the 8-bit scancode that was received.
+*/
+
 module IRDriver(input logic clk, reset, input logic signal, output logic [7:0] value);
     // Clock signal should have a period of 0.5625 ms
     // For a 50MHz clock, divide by 28125
@@ -14,8 +19,8 @@ module IRDriver(input logic clk, reset, input logic signal, output logic [7:0] v
     // If it is and the current value is a 1, then we got a 1
     // If it is but the current value is a 0, then we got a 0
 
-    // The first two bytes are address code and its inverse (maybe safe to ignore?)
-    // Next two are the actual data.
+    // The first two bytes are address code and its inverse
+    // Next two are the actual data
 
     logic [7:0] count;
     logic [15:0] saved_values;
@@ -62,7 +67,7 @@ module IRDriver(input logic clk, reset, input logic signal, output logic [7:0] v
                     count <= 0;
                     prev <= 0;
                 end
-                // Check to see if the data was transferred correctly (122 because value gets copied one cycle after output settles)
+                // Check to see if the data was transferred correctly
                 else if (count == 56)
                 begin
                     if (saved_values[15:8] == ~saved_values[7:0])

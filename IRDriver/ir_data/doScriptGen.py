@@ -2,9 +2,9 @@ from random import *
 
 index = 0
 arr = [[]]
-offsets = [5000000, 5350000, 500000, 5140625, 5140625, 5140625, 5400000, 5400000, 5400000, 5000000]
+offsets = [5000000000, 5350000000, 500000000, 5140625000, 5140625000, 5140625000, 5400000000, 5400000000, 5400000000, 5000000000]
 time_offset = 0
-multiplier = 1000000000
+multiplier = 1000000000000
 
 for cur_file in range(0, 10):
 
@@ -49,4 +49,4 @@ for i in range(0, len(arr)):
     line += str(arr[i][1]) + " @ " + str(int(arr[i][0]))
 print(line)
 
-print("run " + str(int(arr[len(arr)-1][0]) + 50000000))
+print("run " + str(int(arr[len(arr)-1][0]) + 50000000000))

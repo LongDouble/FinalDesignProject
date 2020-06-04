@@ -1,3 +1,8 @@
+/*
+This module decodes the scancode from the IRDriver module
+into a 4 bit number corresponding to the numbered key
+*/
+
 module IRDecoder(input logic [7:0] value, output logic [3:0] result);
     always_comb
         case(value)
