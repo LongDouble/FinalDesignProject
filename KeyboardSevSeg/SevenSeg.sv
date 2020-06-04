@@ -5,12 +5,12 @@ seven-segment display.
 */
 
 module SevenSeg(input  logic [7:0] data,
-				output logic [6:0] segments);
+                output logic [6:0] segments);
 				
 	always_comb
 		case(data)
-			//					 gfe_dcba
-			8'h1D:   segments=7'b100_0001; //w (a 'u' is displayed)
+			//                   gfe_dcba
+			8'h1D:   segments=7'b100_0001; //w ('u' is displayed)
 			8'h1C:   segments=7'b000_1000; //a 
 			8'h2C:   segments=7'b000_0111; //t 
 			8'h24:   segments=7'b000_0110; //e 
