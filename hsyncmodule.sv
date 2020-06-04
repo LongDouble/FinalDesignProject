@@ -1,5 +1,5 @@
 //	Counts the cycles inside each line to determine the timing.
-//	
+//	Reset is active high
 //
 //
 //	Author: Ryan Dillard
@@ -24,7 +24,8 @@ module hsyncmodule(inputclk,reset_b,cycleoutput,linetic,Hdisplay);
 	logic back;
 	
 
-	//Check against the counted values to determine the timing parameter m is what being checked against
+	//Check against the counted values to determine the timing parameter m This one used to control Hsync. 
+	//Hsync is then inverted and output
 	//file: comparator.sv
 	comparator #(.M(96), .N(10)) 
 	synccontrol( 
@@ -33,6 +34,7 @@ module hsyncmodule(inputclk,reset_b,cycleoutput,linetic,Hdisplay);
 
 
 	//Check against the counted values to determine the timing parameter m is what being checked against
+	//True until the cycle leaves the front porch. H display is high when passed
 	//file: comparator.sv	
 	comparator #(.M(144), .N(10))
 	frontporch(
@@ -40,6 +42,7 @@ module hsyncmodule(inputclk,reset_b,cycleoutput,linetic,Hdisplay);
 		.alessthanm(front));
 
 	//Check against the counted values to determine the timing parameter m is what being checked against
+	//True until it reaches the back porch. H display then becomes low.
 	//file: comparator.sv	
 	comparator #(.M(784), .N(10))
 	backporch(
@@ -47,6 +50,7 @@ module hsyncmodule(inputclk,reset_b,cycleoutput,linetic,Hdisplay);
 		.alessthanm(back));
 
 	//Check against the counted values to determine the timing parameter m is what being checked against
+	//All cycles have happened and causes the counter to reset and the process to start over.
 	//file: comparator.sv	
 	comparator #(.M(800), .N(10))
 	resetcontrol(
