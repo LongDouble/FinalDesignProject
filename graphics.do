@@ -28,5 +28,5 @@ force background 111100000000
 force up 0
 force down 0
 force left 0
-force right 0
+force right 1
 run 170000000
