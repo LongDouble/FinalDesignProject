@@ -1,6 +1,10 @@
 //Counter requres the enable to be logic high for any counting to occur
 //Counter resets when enable is logic low
-
+//
+//
+//	Author: Ryan Dillard
+//	Date: 6/3/2020
+//
 module addresscounter #(parameter N = 10)
 	(clk, enable, reset, count);
 	
