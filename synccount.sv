@@ -1,3 +1,10 @@
+//	Handles syncronizing the outputs to meet timing requirements to drive a VGA monitor
+//
+//
+//	Author: Ryan Dillard
+//	Date: 6/3/2020
+//
+
 module synccount(inputclk, reset_b, hsync, vsync, Hdisplay, Vdisplay, hrow , vcolumn);
 
 	input logic inputclk;
@@ -18,6 +25,8 @@ module synccount(inputclk, reset_b, hsync, vsync, Hdisplay, Vdisplay, hrow , vco
 	logic counterreset;
 	logic linetic;
 	
+	//Module handles timing reqirements for each individual line outputs linetic when hsync restarts
+	//file: hsyncmodule.sv
 	hsyncmodule
 	horizontal(
 		.inputclk(inputclk),
@@ -26,12 +35,17 @@ module synccount(inputclk, reset_b, hsync, vsync, Hdisplay, Vdisplay, hrow , vco
 		.linetic(linetic),
 		.Hdisplay(Hdisplay));
 	
+	//Count increments every time a line finishes on rising endge of linetic
+	//file: Counter.sv
 	counter #(.N(10))
 	verticalsync(
 		.clk(linetic),
 		.reset(resetor),
 		.q(counterval));
 		
+
+	//Check against the counted values to determine the timing parameter m is what being checked against
+	//file: comparator.sv
 	comparator #(.M(2), .N(10)) 
 	synccontrol( 
 		.a(counterval),
@@ -52,7 +66,8 @@ module synccount(inputclk, reset_b, hsync, vsync, Hdisplay, Vdisplay, hrow , vco
 		.a(counterval),
 		.alessthanm(resetnot));
 		
-		
+	//When in display this counts to determine which pixel is being worked on
+	//file: en-counter.sv	
 	addresscounter
 	haddresses(
 		.clk(inputclk),
@@ -60,6 +75,8 @@ module synccount(inputclk, reset_b, hsync, vsync, Hdisplay, Vdisplay, hrow , vco
 		.reset(reset_b),
 		.count(hrow));
 		
+	//When in display this counts to determine which pixel is being worked on
+	//file: en-counter.sv		
 	addresscounter
 	vaddresses(
 		.clk(linetic),
@@ -69,6 +86,7 @@ module synccount(inputclk, reset_b, hsync, vsync, Hdisplay, Vdisplay, hrow , vco
 		
 		
 		assign counterreset = ~resetnot;
+		//In the display interval when they are passed the front interval, but haven't reached the back porch
 		assign Vdisplay = ((~front)&(back));
 		assign resetor = counterreset | reset_b;
 		assign vsync = ~vsyncnot;

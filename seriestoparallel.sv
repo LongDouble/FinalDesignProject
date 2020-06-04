@@ -1,3 +1,10 @@
+//  Uses a shift register and normal register to convert serial data to paralle format
+//
+//
+//	Author: Ryan Dillard
+//	Date: 6/3/2020
+//
+
 module seriestoparallel(input logic clk, reset, clklatch,
                         input logic data, 
                         output logic [7:0] dataOut);
