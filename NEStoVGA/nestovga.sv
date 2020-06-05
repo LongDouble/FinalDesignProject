@@ -48,7 +48,7 @@ module nestovga(inputclk, data, reset, background, outred, outgreen, outblue, hs
 
 	//Decoders the serial data into parallel signals
 	//file: NEScontroller.sv
-	nesconsle
+	nesConsle
 		nesdecoder(
 			.data(data),
 			.clk_900KHz(),
