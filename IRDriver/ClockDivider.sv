@@ -8,21 +8,33 @@ clock signal.
 
 module ClockDivider #(parameter divide_by = 2, N = 2) (input logic clk, reset, output logic clk_div);
     logic [N-1:0] count;
-    // Double edge triggered so that we can divide by odd numbers
-    always_ff @(posedge clk, negedge clk, posedge reset)
+    logic tff1; // state of first tff
+    logic tff2; // state of second tff
+
+    always_ff @(posedge clk, posedge reset)
         if (reset)
         begin
             count <= 0;
-            clk_div <= 0;
         end
         else
         begin
-            if (count < divide_by - 1)
-                count <= count + 1;
-            else
-            begin
-                clk_div <= ~clk_div; // toggle the  output
+            if (count == divide_by - 1)
                 count <= 0;
-            end
+            else
+                count <= count + 1;
         end
+    
+    always_ff @(posedge clk, posedge reset)
+        if (reset)
+            tff1 <= 0;
+        else if (count == 0) // enable
+            tff1 <= ~tff1;
+    
+    always_ff @(negedge clk, posedge reset) // offset by half a clock cycle
+        if (reset)
+            tff2 <= 0;
+        else if (count == (divide_by/2)+1) // enable
+            tff2 <= ~tff2;
+
+    assign clk_div = tff1 ^ tff2; // the resulting clock is the XOR of the states of the two flip flops
 endmodule
